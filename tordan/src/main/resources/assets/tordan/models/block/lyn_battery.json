@@ -1,0 +1,11 @@
+{ 
+	"parent": "block/cube_bottom_top",
+	"textures": { 
+		"bottom": "tordan:blocks/lyn_battery_bottom",
+		"top": "tordan:blocks/lyn_battery_top",
+		"north": "tordan:blocks/lyn_battery_side",
+		"south": "tordan:blocks/lyn_battery_side",
+		"west": "tordan:blocks/lyn_battery_side",
+		"east": "tordan:blocks/lyn_battery_side"
+	}
+}
