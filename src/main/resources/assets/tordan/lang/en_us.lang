@@ -1,0 +1,12 @@
+item.lyn_ring.name=Ring of Lyn
+item.lyn_bracelet.name=Lyn Bracelet
+item.lyn_ring.name=Ring of Lyn
+item.lyn_bracelet.name=Lyn Bracelet
+
+tile.lyn_battery.name=Basic Lyn Battery
+tile.copper_ore.name=Copper Ore
+tile.silver_ore.name=Silver Ore
+tile.random_block.name=Random Block
+tile.copper_rod.name=Copper Rod
+
+itemGroup.tordanmodtab=Tordan
