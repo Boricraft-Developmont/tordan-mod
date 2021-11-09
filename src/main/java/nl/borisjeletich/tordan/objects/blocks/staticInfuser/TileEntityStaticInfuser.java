@@ -95,10 +95,10 @@ public class TileEntityStaticInfuser extends TileEntity extends TileEntityLockab
     }
 
     private boolean canInfuserWork() {
-        if(((ItemStack)this.infuserItemStacks.get(0)).isEmpty() return false;
+        if(((ItemStack)this.infuserItemStacks.get(0)).isEmpty()) return false;
         else {
             ItemStack result = InfuserRecipes.getInstance().getInfuserResult((ItemStack)this.infuserItemStacks.get(0));
-            if(result.isEmpty() return false;
+            if(result.isEmpty()) return false;
             else {
                 ItemStack output = (ItemStack)this.infuserItemStacks.get(0);
                 if(output.isEmpty()) return false;
