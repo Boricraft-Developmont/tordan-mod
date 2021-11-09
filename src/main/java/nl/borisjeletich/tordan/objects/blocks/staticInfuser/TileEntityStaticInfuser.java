@@ -1,15 +1,17 @@
 package nl.borisjeletich.tordan.objects.blocks.staticInfuser;
 
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityStaticInfuser extends TileEntity extends TileEntityLockable implements ITickable, ISidedInventory {
+public class TileEntityStaticInfuser extends TileEntity implements ITickable, ISidedInventory {
 
     private static final int[] slotsTop = new int[] {0};
     private static final int[] slotsBottom = new int[] {2, 1};
