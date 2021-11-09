@@ -15,4 +15,5 @@ public class ItemInit {
 	
 	public static final Item COPPER_INGOT = new ItemBase("copper_ingot");
 	public static final Item SILVER_INGOT = new ItemBase("silver_ingot");
+	public static final Item LYNITE_INGOT = new ItemBase("lynite_ingot");
 }

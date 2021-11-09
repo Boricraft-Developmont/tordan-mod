@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+
+  key: {
+    "B": {
+      "item": "tordan:lyn_battery",
+      "count": 1
+    },
+    "L": {
+      "item": "tordan:lynite",
+      "count": 1
+    }
+  },
+
+  result: {
+    "item": "tordan:lyn_ring",
+    "count": 1
+  }
+
+}
