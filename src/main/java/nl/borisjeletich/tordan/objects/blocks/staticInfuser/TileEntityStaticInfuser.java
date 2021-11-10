@@ -1,13 +1,16 @@
 package nl.borisjeletich.tordan.objects.blocks.staticInfuser;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -90,6 +93,46 @@ public class TileEntityStaticInfuser extends TileEntity implements ITickable, IS
     }
 
     public void update() {
+        boolean flag = this.isActive();
+        boolean flag1 = false;
+        if (this.isActive()) --this.infuserWorkTime; {
+            if (!this.world.isRemote) {
+                ItemStack itemstack = (ItemStack)this.infuserItemStacks.get(0);
+                if (this.infuserWorkTime == 0 && this.canInfuse(itemstack)) {
+                    this.totalWorkTime = this.getInfuserWorkTime();
+                    this.infuserWorkTime = this.totalWorkTime;
+                    flag1 = true;
+
+                    if(!itemstack.isEmpty()) {
+                        Item item = itemstack.getItem();
+                        itemstack.shrink(1);
+
+                        if(itemstack.isEmpty()) {
+                            ItemStack itemstack1 = ((Item) item).getContainerItem(itemstack);
+                            this.infuserItemStacks.set(0, itemstack1);
+                        }
+                    }
+                }
+            }
+            if(this.isActive()){
+                ++this.infuserWorkTime;
+
+                if(this.infuserWorkTime >= this.totalWorkTime) {
+                    this.infuserWorkTime = 0;
+                    this.totalWorkTime = this.getInfuserWorkTime((ItemStack)this.infuserItemStacks.get(0), (ItemStack)this.infuserItemStacks.get(1));
+                    this.infuseItem();
+                    flag1 = true;
+                }
+            }
+            else this.infuserWorkTime = 0;
+        }
+        else if (!this.isActive() && this.infuserWorkTime > 0) {
+            this.infuserWorkTime = MathHelper.clamp(this.infuserWorkTime - 2, 0, this.totalWorkTime);
+        }
+        if (flag != this.isActive()) {
+            flag1 = true;
+            StaticInfuser.setState(this.isActive(), this.world, this.pos);
+        }
     }
 
     public int getInfuserWorkTime() {
@@ -111,8 +154,53 @@ public class TileEntityStaticInfuser extends TileEntity implements ITickable, IS
             }
         }
     }
-// TODO Add Infuser recipe checking
-    public void infuseItem(){
 
+    public void infuseItem(){
+        if(canInfuserWork()){
+            ItemStack input = (ItemStack)this.infuserItemStacks.get(0);
+            ItemStack result = InfuserRecipes.getInstance().getInfuserResult((ItemStack)this.infuserItemStacks.get(0));
+            ItemStack output = (ItemStack)this.infuserItemStacks.get(1);
+
+            if(output.isEmpty()) this.infuserItemStacks.set(1, result.copy());
+            else if(output.getItem() == result.getItem()) output.grow(result.getCount());
+            input.shrink(1);
+        }
+    }
+
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+    }
+
+
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        if(((ItemStack)this.infuserItemStacks.get(1)).isEmpty()) return true;
+        else return false;
+    }
+
+    @Override
+    public int getField(int id) {
+        switch(id) {
+            case 0:
+                return this.infuserWorkTime;
+            case 1:
+                return this.totalWorkTime;
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public void setField(int id, int value) {
+        switch(id) {
+            case 0:
+                this.infuserWorkTime = value;
+                break;
+            case 1:
+                this.totalWorkTime = value;
+                break;
+        }
     }
 }
