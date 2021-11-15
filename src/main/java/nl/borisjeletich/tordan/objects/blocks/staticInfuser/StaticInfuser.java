@@ -178,7 +178,7 @@ public class StaticInfuser extends BlockContainer implements IHasModel {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new blockState(this, new IProperty[]{FACING});
+        return new BlockStateContainer(this, new IProperty[]{FACING});
     }
 
     @Override
