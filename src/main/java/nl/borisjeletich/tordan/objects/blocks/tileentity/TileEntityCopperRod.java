@@ -56,7 +56,7 @@ public class TileEntityCopperRod extends TileEntity implements ITickable {
     public void update() {
         if (world.isThundering() == true) {
             int min = 1;
-            int max = 100;
+            int max = 2400;
             int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
             if (random_int == 50) {
                 world.addWeatherEffect(new EntityLightningBolt(world, pos.getX(), pos.getY(), pos.getZ(), false));
