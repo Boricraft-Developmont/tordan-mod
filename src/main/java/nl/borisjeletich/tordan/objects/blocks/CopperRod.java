@@ -10,6 +10,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -19,7 +20,10 @@ import net.minecraft.world.World;
 import nl.borisjeletich.tordan.Tordan;
 import nl.borisjeletich.tordan.init.BlockInit;
 import nl.borisjeletich.tordan.init.ItemInit;
+import nl.borisjeletich.tordan.objects.blocks.tileentity.TileEntityCopperRod;
 import nl.borisjeletich.tordan.util.interfaces.IHasModel;
+
+import javax.annotation.Nullable;
 
 public class CopperRod extends Block implements IHasModel{
 
@@ -76,8 +80,19 @@ public class CopperRod extends Block implements IHasModel{
 			setCreativeTab(Tordan.TORDANMODTAB);
 			BlockInit.BLOCKS.add(this);
 			ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
-		}
-	
+	}
+
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		return new TileEntityCopperRod();
+	}
+
 	@Override
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
