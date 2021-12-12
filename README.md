@@ -10,4 +10,7 @@ The Tordan mod is developed by:
 - [@Radical06](https://github.com/Radical06)
 ## Features
 
-Combat and utility rings
+- Combat and utility rings
+- New weapons
+- A new way of enchanting your items
+- A new boss to defeat
